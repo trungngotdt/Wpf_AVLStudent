@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2037
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wpf_AVLStudent", "Wpf_AVLStudent\Wpf_AVLStudent.csproj", "{4AC7F8B9-8165-4610-9EF7-2B7FE6FDF39F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4AC7F8B9-8165-4610-9EF7-2B7FE6FDF39F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AC7F8B9-8165-4610-9EF7-2B7FE6FDF39F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AC7F8B9-8165-4610-9EF7-2B7FE6FDF39F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AC7F8B9-8165-4610-9EF7-2B7FE6FDF39F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FA2C382A-B783-44ED-B2B9-B73055E3DCD8}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 2
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://ngotrung.visualstudio.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Wpf_AVLStudent\\Wpf_AVLStudent.csproj
+		SccProjectName1 = Wpf_AVLStudent
+		SccLocalPath1 = Wpf_AVLStudent
+	EndGlobalSection
+EndGlobal
