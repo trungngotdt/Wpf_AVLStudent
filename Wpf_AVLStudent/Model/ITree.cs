@@ -11,6 +11,8 @@ namespace Wpf_AVLStudent.Model
     {
         Node<T> Root { get; set; }
 
+        int Height(Node<T> node);
+        int Height();
         /// <summary>
         /// Adds the elements of the specified collection to the BST
         /// </summary>
@@ -140,6 +142,8 @@ namespace Wpf_AVLStudent.Model
         /// <returns></returns>
         Node<T> FindNode(Node<T> node);
 
+        Node<T> FindNode(Node<T> nodeRoot, Node<T> node);
+
         /// <summary>
         /// Remove the elements in BST - tree root
         /// Return list of element can't removed
@@ -173,6 +177,8 @@ namespace Wpf_AVLStudent.Model
         /// </summary>
         /// <param name="item"></param>
         void Insert(T item);
+
+        void InsertNoRotation(Node<T> x);
 
         /// <summary>
         /// A List with element from minimum to maximum

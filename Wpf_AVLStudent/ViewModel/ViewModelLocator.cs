@@ -9,11 +9,12 @@
   DataContext="{Binding Source={StaticResource Locator}, Path=ViewModelName}"
 */
 
+using CommonServiceLocator;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
-using Microsoft.Practices.ServiceLocation;
 using System;
 using Wpf_AVLStudent.Model;
+using Wpf_AVLStudent.MyUtilities;
 
 namespace Wpf_AVLStudent.ViewModel
 {
@@ -24,20 +25,13 @@ namespace Wpf_AVLStudent.ViewModel
     /// See http://www.mvvmlight.net
     /// </para>
     /// </summary>
-    public class ViewModelLocator<T> where T : class, IComparable, new()
+    public class ViewModelLocator
     {
         static ViewModelLocator()
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
-            SimpleIoc.Default.Register<ITree<T>, AVLTree<T>>();
-            if (ViewModelBase.IsInDesignModeStatic)
-            {
-                SimpleIoc.Default.Register<IDataService, Design.DesignDataService>();
-            }
-            else
-            {
-                SimpleIoc.Default.Register<IDataService, DataService>();
-            }
+            SimpleIoc.Default.Register<ITree<Student>, AVLTree<Student>>();
+            SimpleIoc.Default.Register<IUtilities, Utilities>();
 
             SimpleIoc.Default.Register<MainViewModel>();
         }

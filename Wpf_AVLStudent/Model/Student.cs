@@ -25,6 +25,15 @@ namespace Wpf_AVLStudent.Model
 
         }
 
+        public Student(int id)
+        {
+            this.Id = id;
+            this.Name = null;
+            this.AvgMark = 0;
+            this.AccumulationCredit = 0;
+            this.BirthDay = DateTime.Now;
+        }
+
         public Student(int id, string name, DateTime birth, float avg, int accumulationCredit)
         {
             this.Id = id;
@@ -52,10 +61,10 @@ namespace Wpf_AVLStudent.Model
                 var stu = obj as Student;
                 return this.Id == stu.Id;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
-                throw ex;
+                throw ;
             }
         }
 

@@ -13,10 +13,14 @@ namespace Wpf_AVLStudent.Model
         private Node<T> left;
         private Node<T> right;
         private int heightNode;
+        private double x;
+        private double y;
         public T Data { get => data; set => data = value; }
         public Node<T> Left { get => left; set => left = value; }
         public Node<T> Right { get => right; set => right = value; }
         public int HeightNode { get => heightNode; set => heightNode = value; }
+        public double X { get => x; set => x = value; }
+        public double Y { get => y; set => y = value; }
 
         public Node()
         {
@@ -26,6 +30,14 @@ namespace Wpf_AVLStudent.Model
             Right = null;
         }
 
+        public Node(T data, double x, double y)
+        {
+            this.X = x;
+            this.Y = y;
+            this.Data = data;
+            this.Left = null;// Letf is DBNull ? (T)dbNull : default(T);
+            this.Right = null;
+        }
 
         public Node(T data, Node<T> nodeChild, Node<T> nodeChild2)
         {

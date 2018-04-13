@@ -16,7 +16,7 @@ namespace Wpf_AVLStudent.Model
         {
             get
             {
-                root = root ?? new Node<T>();
+                
                 return root;
             }
             set => root = value;
@@ -360,16 +360,22 @@ namespace Wpf_AVLStudent.Model
             return FindNode(new Node<T>(data));
         }
 
+
+        public Node<T> FindNode(Node<T> node)
+        {
+            return FindNode(root, node);
+        }
+
         /// <summary>
         /// Searches for the element that matches the conditions defined by the specified
         /// </summary>
         /// <param name="node"></param>
         /// <param name="data"></param>
         /// <returns></returns>
-        public Node<T> FindNode(Node<T> node)
+        public Node<T> FindNode(Node<T> nodeRoot, Node<T> node)
         {
 
-            Node<T> temp = Root;
+            Node<T> temp = nodeRoot;
             if (node == null)
             {
                 return null;
@@ -456,7 +462,7 @@ namespace Wpf_AVLStudent.Model
             {
                 return;
             }
-            Root = new Node<T>(Insert(Root, key));
+            Root = new Node<T>(Insert(Root,new Node<T>( key)));
         }
 
         public void Insert(Node<T> node)
@@ -465,23 +471,46 @@ namespace Wpf_AVLStudent.Model
             {
                 return;
             }
-            Root = Insert(Root, node.Data);
+            Root = Insert(Root, node);
         }
 
-        private Node<T> Insert(Node<T> x, T key)
+        private Node<T> Insert(Node<T> x,Node< T> key)
         {
             if (x == null)
-                return new Node<T>(key, 0);
+                return key;
             int cmp = key.CompareTo(x.Data);
             if (cmp < 0)
                 x.Left = Insert(x.Left, key);
             else if (cmp > 0)
                 x.Right = Insert(x.Right, key);
             else
-                x.Data = key;
+                x.Data = key.Data;
             x = Balance(x);
             /*x.size = 1 + size(x.left) + size(x.right);*/
             x.HeightNode = Height(x);
+            return x;
+        }
+
+        public void InsertNoRotation(Node<T> x)
+        {
+            root = InsertNoRotation(root, x);
+
+        }
+        private Node<T> InsertNoRotation(Node<T> x, Node<T> key)
+        {
+            if (x == null)
+            {
+                //Node<T> node = new Node<T>(key.Data, key.X, key.Y);
+                return key;
+            }
+
+            int cmp = key.CompareTo(x);
+            if (cmp < 0)
+                x.Left = InsertNoRotation(x.Left, key);
+            else if (cmp > 0)
+                x.Right = InsertNoRotation(x.Right, key);
+            else
+                x.Data = key.Data;
             return x;
         }
 
