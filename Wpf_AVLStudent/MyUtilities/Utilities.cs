@@ -26,7 +26,7 @@ namespace Wpf_AVLStudent.MyUtilities
         public int VerticalMarging { get => verticalMarging; set => verticalMarging = value; }
         public double WidthGridBST { get => widthGridBST; set => widthGridBST = value; }
         public double HeightGridBST { get => heightGridBST; set => heightGridBST = value; }
-
+        
         #region Add a node to grid
 
         #region Draw line
@@ -125,6 +125,8 @@ namespace Wpf_AVLStudent.MyUtilities
                 if (x + 50 >= WidthGridBST || x - 50 <= 0)
                 {
                     ResizeGrid();
+                    (p as Grid).Width = WidthGridBST;
+                    (p as Grid).Height = HeightGridBST;
                     await ReLayoutAllButtonAsync(p as Grid);
                 }
                 DrawLine(p as Grid, checkExitsParent.Item1.X, node.X, checkExitsParent.Item1.Y, node.Y, checkExitsParent.Item2 > 0, $"{"Btn" + checkExitsParent.Item1.Data.Id.ToString() + "Btn" + node.Data.Id.ToString() }");
@@ -290,7 +292,6 @@ namespace Wpf_AVLStudent.MyUtilities
                     list.Add(task);
                 }
                 await Task.WhenAll(list);
-                //(p as Grid).Children.Remove(FindLineInGrid(p as Grid, $"Btn{father.Data}Btn{node.Data}"));
                 DrawLine(p as Grid, father.X, node.X, father.Y, node.Y, isRight, $"Btn{father.Data.Id}Btn{node.Data.Id}");
             }
             AnimationButtonMovetTo(node.X, node.Y, (p as Grid).Children.OfType<Button>().Where(b => b.Name == $"Btn{node.Data.Id}").FirstOrDefault());
@@ -459,9 +460,12 @@ namespace Wpf_AVLStudent.MyUtilities
                 {
                     ellipse = new Ellipse()
                     {
+                        HorizontalAlignment = HorizontalAlignment.Left,
+                        VerticalAlignment = VerticalAlignment.Top,
+                        Margin = new Thickness(point.X - 5, point.Y - 5, 0, 0),
                         Stroke = new SolidColorBrush(Colors.Red),
-                        Width = 55,
-                        Height = 55,
+                        Width = 60,
+                        Height =60,
                         StrokeThickness = 1.0
                     };
                     (grid as Grid).Children.Add(ellipse);

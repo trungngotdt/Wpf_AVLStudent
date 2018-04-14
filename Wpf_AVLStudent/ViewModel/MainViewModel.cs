@@ -100,14 +100,16 @@ namespace Wpf_AVLStudent.ViewModel
 
         public int NumbeFind { get => numbeFind; set => numbeFind = value; }
         public int NumBeDelete { get => numBeDelete; set => numBeDelete = value; }
-        public double WidthGridBST { get => widthGridBST;
+        public double WidthGridBST
+        {
+            get => widthGridBST;
             set
             {
                 widthGridBST = value;
                 RaisePropertyChanged("WidthGridBST");
             }
         }
-        public double HeightGridBST { get => heightGridBST; set { heightGridBST = value;RaisePropertyChanged("HeightGridBST");  } }
+        public double HeightGridBST { get => heightGridBST; set { heightGridBST = value; RaisePropertyChanged("HeightGridBST"); } }
 
         public bool IsTxbDeleteNode { get => isTxbDeleteNode; set => isTxbDeleteNode = value; }
         public bool IsToggleBtnUpdate { get => isToggleBtnUpdate; set => isToggleBtnUpdate = value; }
@@ -158,17 +160,17 @@ namespace Wpf_AVLStudent.ViewModel
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
-        public MainViewModel( ITree<Student> _tree,IUtilities utilities)
+        public MainViewModel(ITree<Student> tree, IUtilities utilities)
         {
-            
+
             this.getUtilities = utilities;
-            getUtilities.Tree = _tree;
+            getUtilities.Tree = tree;
             HeightGridBST = 705;
             WidthGridBST = 1138.3333333333335;
             getUtilities.WidthGridBST = WidthGridBST;
             getUtilities.VerticalMarging = VerticalMarging;
             getUtilities.HeightGridBST = HeightGridBST;
-            
+
         }
 
         #region Command
@@ -177,48 +179,105 @@ namespace Wpf_AVLStudent.ViewModel
         {
             get
             {
-                return btnAddNodeClickCommand= new RelayCommand<UIElement>(async (p) =>
-                {
-                                        
-                    Student student;
-                    if (IsCkbAddArray)
-                    {
-                        StringBuilder builder = new StringBuilder();
-                        var list = GetDataFromExcel();
-                        for (int i = 0; i < list.Length; i++)
-                        {
-                            if ((p as Grid).Children.OfType<Button>().Where(pa => pa.Name.Equals($"Btn{list[i].Id.ToString()}")).ToList().Count != 0)
-                            {
-                                builder.Append(list[i].ToString() + "\n");
-                                continue;
-                            }
-                            student = new Student(list[i].Id, list[i].Name, list[i].BirthDay, list[i].AvgMark, list[i].AccumulationCredit);
-                            await GetUtilities.AddButtonGridAsync(p as Grid, student);
-                            await Task.Delay(1000);
-                        }
-                        if (builder.Length != 0)
-                        {
-                            MessageBox.Show("We can't add : \n" + builder.ToString());
-                        }
-                        return;
-                    }
-                    if ((Id.Trim().Length == 0) || (p as Grid).Children.OfType<Button>().Where(pa => pa.Name.Equals($"Btn{Id.ToString()}")).ToList().Count != 0)
-                    {
-                        MessageBox.Show($"We can't add {Id.ToString()}");
-                        return;
-                    }
-                    student = new Student(int.Parse(Id), Name, BirthDay, float.Parse(AvgMark), int.Parse(AccumulationCredit));
-                    await GetUtilities.AddButtonGridAsync(p as Grid, student);
-                    HeightGridBST = GetUtilities.HeightGridBST;
-                    WidthGridBST = GetUtilities.WidthGridBST;
-                }); 
+                return btnAddNodeClickCommand = new RelayCommand<UIElement>(async (p) =>
+                 {
+
+                     Student student;
+                     if (IsCkbAddArray)
+                     {
+                         StringBuilder builder = new StringBuilder();
+                         var list = GetDataFromExcel();
+                         for (int i = 0; i < list.Length; i++)
+                         {
+                             if ((p as Grid).Children.OfType<Button>().Where(pa => pa.Name.Equals($"Btn{list[i].Id.ToString()}")).ToList().Count != 0)
+                             {
+                                 builder.Append(list[i].ToString() + "\n");
+                                 continue;
+                             }
+                             student = new Student(list[i].Id, list[i].Name, list[i].BirthDay, list[i].AvgMark, list[i].AccumulationCredit);
+                             await GetUtilities.AddButtonGridAsync(p as Grid, student);
+                             await Task.Delay(1000);
+                         }
+                         if (builder.Length != 0)
+                         {
+                             MessageBox.Show("We can't add : \n" + builder.ToString());
+                         }
+                         return;
+                     }
+                     if ((Id.Trim().Length == 0) || (p as Grid).Children.OfType<Button>().Where(pa => pa.Name.Equals($"Btn{Id.ToString()}")).ToList().Count != 0)
+                     {
+                         MessageBox.Show($"We can't add {Id.ToString()}");
+                         return;
+                     }
+                     student = new Student(int.Parse(Id), Name, BirthDay, float.Parse(AvgMark), int.Parse(AccumulationCredit));
+                     await GetUtilities.AddButtonGridAsync(p as Grid, student);
+                     HeightGridBST = GetUtilities.HeightGridBST;
+                     WidthGridBST = GetUtilities.WidthGridBST;
+                 });
             }
         }
 
-        public ICommand BtnFindNodeClickCommand { get { return btnFindNodeClickCommand; } }
+        public ICommand BtnFindNodeClickCommand
+        {
+            get
+            {
+                return btnFindNodeClickCommand = new RelayCommand<object[]>((p) =>
+                {
 
-        public ICommand BtnDeleteNodeClickCommand { get { return btnDeleteNodeClickCommand; } }
+                    string propertyContent = "";
+                    var propertyName = (p[1] as WrapPanel).Children.OfType<RadioButton>().Where(r => r.IsChecked == true && r.Name.StartsWith("RdbFind")).FirstOrDefault()?.Name.Substring(7);
+                    if (propertyName == null)
+                    {
+                        MessageBox.Show("Don't have any choice!");
+                        return;
+                    }
+                    propertyContent = (p[1] as WrapPanel).Children.OfType<TextBox>().Where(t => t.IsEnabled).FirstOrDefault().Text;
 
+                    List<Student> students = GetUtilities.Tree.ToList().Where(pr => pr.GetType().GetProperty(propertyName).GetValue(pr, null).ToString().Equals(propertyContent)).ToList();
+                    if (students == null)
+                    {
+                        MessageBox.Show("Don't have this student");
+                        return;
+                    }
+                    for (int i = 0; i < students.Count; i++)
+                    {
+                        GetUtilities.FindNodeInGrid(new Node<Student>(students[i]), p[0] as Grid);
+                    }
+                });
+            }
+        }
+
+        public ICommand BtnDeleteNodeClickCommand
+        {
+            get
+            {
+                return btnDeleteNodeClickCommand = new RelayCommand<Grid>(async (p) =>
+                {
+
+                    if (IsCkbDeleteArray)
+                    {
+                        var list = GetDataFromExcel();
+                        for (int i = 0; i < list.Length; i++)
+                        {
+                            await HelpCommandDeleteAsync(p, list[i].Id);
+                        }
+                        return;
+                    }
+                    await HelpCommandDeleteAsync(p, NumBeDelete);
+                });
+            }
+        }
+
+        private async Task HelpCommandDeleteAsync(Grid grid, int id)
+        {
+            if ((id == null) || (grid as Grid).Children.OfType<Button>().Where(pa => pa.Name.Equals($"Btn{id.ToString()}")).ToList().Count == 0)
+            {
+                MessageBox.Show($"We can't delete {id.ToString()}");
+                return;
+            }
+
+            await GetUtilities.DeleteNodeInGridAsync(grid, NumBeDelete);
+        }
         public ICommand BtnUpdateClickCommand { get { return btnUpdateClickCommand; } }
 
         public ICommand BtnTraversal { get { return btnTraversal; } }
