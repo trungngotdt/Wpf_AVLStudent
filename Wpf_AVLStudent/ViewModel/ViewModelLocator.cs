@@ -32,6 +32,7 @@ namespace Wpf_AVLStudent.ViewModel
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
             SimpleIoc.Default.Register<ITree<Student>, AVLTree<Student>>();
             SimpleIoc.Default.Register<IUtilities, Utilities>();
+            SimpleIoc.Default.Register<IHelper, Helper>();
             SimpleIoc.Default.Register<MainViewModel>();
         }
 

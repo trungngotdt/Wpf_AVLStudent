@@ -37,5 +37,13 @@ namespace Wpf_AVLStudent.MyUtilities
         /// <param name="grid"></param>
         /// <param name="nodeDelete"></param>
         Task DeleteNodeInGridAsync(Grid grid, int nodeDelete);
+
+        /// <summary>
+        /// Find the Button in grid  - async
+        /// </summary>
+        /// <param name="grid"></param>
+        /// <param name="match">name of the button</param>
+        /// <returns></returns>
+        Task<Tuple<List<Task>, Button>> FindButtonInGrid(Grid grid, object match);
     }
 }

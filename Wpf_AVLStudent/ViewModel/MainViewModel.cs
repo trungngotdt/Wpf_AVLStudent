@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -86,20 +87,106 @@ namespace Wpf_AVLStudent.ViewModel
         private ICommand btnClear;
         private ICommand expClearData;
 
-        public string IdUpdate { get => idUpdate; set => idUpdate = value; }
-        public string NameUpdate { get => nameUpdate; set => nameUpdate = value; }
-        public string AvgMarkUpdate { get => avgMarkUpdate; set => avgMarkUpdate = value; }
-        public string AccumulationCreditUpdate { get => accumulationCreditUpdate; set => accumulationCreditUpdate = value; }
-        public DateTime BirthDayUpdate { get => birthDayUpdate; set => birthDayUpdate = value; }
+        public string IdUpdate
+        {
+            get => idUpdate;
+            set
+            {
+                idUpdate = value;
+                RaisePropertyChanged("IdUpdate");
+            }
+        }
+        public string NameUpdate
+        {
+            get => nameUpdate;
+            set
+            {
+                nameUpdate = value;
+                RaisePropertyChanged("NameUpdate");
+            }
+        }
+        public string AvgMarkUpdate
+        {
+            get => avgMarkUpdate;
+            set
+            {
+                avgMarkUpdate = value;
+                RaisePropertyChanged("AvgMarkUpdate");
+            }
+        }
+        public string AccumulationCreditUpdate
+        {
+            get => accumulationCreditUpdate;
+            set
+            {
+                accumulationCreditUpdate = value;
+                RaisePropertyChanged("AccumulationCreditUpdate");
+            }
+        }
+        public DateTime BirthDayUpdate
+        {
+            get => birthDayUpdate; set
+            {
+                birthDayUpdate = value;
+                RaisePropertyChanged("BirthDayUpdate");
+            }
+        }
 
-        public string Id { get => id; set => id = value; }
-        public string Name { get => name; set => name = value; }
-        public string AvgMark { get => avgMark; set => avgMark = value; }
-        public string AccumulationCredit { get => accumulationCredit; set => accumulationCredit = value; }
-        public DateTime BirthDay { get => birthDay; set => birthDay = value; }
+        public string Id
+        {
+            get => id;
+            set
+            {
+                id = value;
+                RaisePropertyChanged("Id");
+            }
+        }
+        public string Name
+        {
+            get => name;
+            set
+            {
+                name = value;
+                RaisePropertyChanged("Name");
+            }
+        }
+        public string AvgMark
+        {
+            get => avgMark;
+            set
+            {
+                avgMark = value;
+                RaisePropertyChanged("AvgMark");
+            }
+        }
+        public string AccumulationCredit
+        {
+            get => accumulationCredit;
+            set
+            {
+                accumulationCredit = value;
+                RaisePropertyChanged("AccumulationCredit");
+            }
+        }
+        public DateTime BirthDay
+        {
+            get => birthDay;
+            set
+            {
+                birthDay = value;
+                RaisePropertyChanged("BirthDay");
+            }
+        }
 
-        public int NumbeFind { get => numbeFind; set => numbeFind = value; }
-        public int NumBeDelete { get => numBeDelete; set => numBeDelete = value; }
+        public int NumBeDelete
+        {
+            get => numBeDelete;
+            set
+            {
+                numBeDelete = value;
+                RaisePropertyChanged("NumBeDelete");
+            }
+        }
         public double WidthGridBST
         {
             get => widthGridBST;
@@ -109,15 +196,79 @@ namespace Wpf_AVLStudent.ViewModel
                 RaisePropertyChanged("WidthGridBST");
             }
         }
-        public double HeightGridBST { get => heightGridBST; set { heightGridBST = value; RaisePropertyChanged("HeightGridBST"); } }
+        public double HeightGridBST
+        {
+            get => heightGridBST;
+            set
+            {
+                heightGridBST = value;
+                RaisePropertyChanged("HeightGridBST");
+            }
+        }
 
-        public bool IsTxbDeleteNode { get => isTxbDeleteNode; set => isTxbDeleteNode = value; }
-        public bool IsToggleBtnUpdate { get => isToggleBtnUpdate; set => isToggleBtnUpdate = value; }
-        public bool IsTxbUpdateStudent { get => isTxbUpdateStudent; set => isTxbUpdateStudent = value; }
-        public bool IsTxbUpdateName { get => isTxbUpdateName; set => isTxbUpdateName = value; }
-        public bool IsTxbUpdateAvgMark { get => isTxbUpdateAvgMark; set => isTxbUpdateAvgMark = value; }
-        public bool IsDpkUpdateBirthDay { get => isDpkUpdateBirthDay; set => isDpkUpdateBirthDay = value; }
-        public bool IsTxbUpdateAccumulationCredit { get => isTxbUpdateAccumulationCredit; set => isTxbUpdateAccumulationCredit = value; }
+        public bool IsTxbDeleteNode
+        {
+            get => isTxbDeleteNode;
+            set
+            {
+                isTxbDeleteNode = value;
+                RaisePropertyChanged("IsTxbDeleteNode");
+            }
+        }
+        public bool IsToggleBtnUpdate
+        {
+            get => isToggleBtnUpdate;
+            set
+            {
+                isToggleBtnUpdate = value;
+                RaisePropertyChanged("IsToggleBtnUpdate");
+            }
+        }
+        public bool IsTxbUpdateStudent
+        {
+            get => isTxbUpdateStudent;
+            set
+            {
+                isTxbUpdateStudent = value;
+                RaisePropertyChanged("IsTxbUpdateStudent");
+            }
+        }
+        public bool IsTxbUpdateName
+        {
+            get => isTxbUpdateName;
+            set
+            {
+                isTxbUpdateName = value;
+                RaisePropertyChanged("IsTxbUpdateName");
+            }
+        }
+        public bool IsTxbUpdateAvgMark
+        {
+            get => isTxbUpdateAvgMark;
+            set
+            {
+                isTxbUpdateAvgMark = value;
+                RaisePropertyChanged("IsTxbUpdateAvgMark");
+            }
+        }
+        public bool IsDpkUpdateBirthDay
+        {
+            get => isDpkUpdateBirthDay;
+            set
+            {
+                isDpkUpdateBirthDay = value;
+                RaisePropertyChanged("IsDpkUpdateBirthDay");
+            }
+        }
+        public bool IsTxbUpdateAccumulationCredit
+        {
+            get => isTxbUpdateAccumulationCredit;
+            set
+            {
+                isTxbUpdateAccumulationCredit = value;
+                RaisePropertyChanged("IsTxbUpdateAccumulationCredit");
+            }
+        }
         public bool IsCkbAddArray
         {
             get
@@ -136,24 +287,162 @@ namespace Wpf_AVLStudent.ViewModel
             }
             set => isCkbDeleteArray = value;
         }
-        public bool IsTxbIdAdd { get => isTxbIdAdd; set => isTxbIdAdd = value; }
-        public bool IsTxbNameAdd { get => isTxbNameAdd; set => isTxbNameAdd = value; }
-        public bool IsTxbAvgMarkAdd { get => isTxbAvgMarkAdd; set => isTxbAvgMarkAdd = value; }
-        public bool IsTxbAccumulationCreditAdd { get => isTxbAccumulationCreditAdd; set => isTxbAccumulationCreditAdd = value; }
-        public bool IsDpkBirthDayAdd { get => isDpkBirthDayAdd; set => isDpkBirthDayAdd = value; }
-        public bool IsRdbSuperLeft { get => isRdbSuperLeft; set => isRdbSuperLeft = value; }
-        public bool IsRdbSuperRight { get => isRdbSuperRight; set => isRdbSuperRight = value; }
-        public bool IsRdbNormal { get => isRdbNormal; set => isRdbNormal = value; }
-        public bool IsRdbFindId { get => isRdbFindId; set => isRdbFindId = value; }
-        public bool IsRdbFindName { get => isRdbFindName; set => isRdbFindName = value; }
-        public bool IsRdbFindAvgMark { get => isRdbFindAvgMark; set => isRdbFindAvgMark = value; }
-        public bool IsRdbFindAccumulationCredit { get => isRdbFindAccumulationCredit; set => isRdbFindAccumulationCredit = value; }
-        public bool IsRdbFindBirthDay { get => isRdbFindBirthDay; set => isRdbFindBirthDay = value; }
-        public string TxbFindName { get => txbFindName; set => txbFindName = value; }
-        public string TxbFindAvgMark { get => txbFindAvgMark; set => txbFindAvgMark = value; }
-        public string TxbFindAccumulationCredit { get => txbFindAccumulationCredit; set => txbFindAccumulationCredit = value; }
-        public DateTime DpkFindBirthDay { get => dpkFindBirthDay; set => dpkFindBirthDay = value; }
-        public string TxbFindId { get => txbFindId; set => txbFindId = value; }
+        public bool IsTxbIdAdd
+        {
+            get => isTxbIdAdd; set
+            {
+                isTxbIdAdd = value;
+                RaisePropertyChanged("IsTxbIdAdd");
+            }
+        }
+        public bool IsTxbNameAdd
+        {
+            get => isTxbNameAdd;
+            set
+            {
+                isTxbNameAdd = value;
+                RaisePropertyChanged("IsTxbNameAdd");
+            }
+        }
+        public bool IsTxbAvgMarkAdd
+        {
+            get => isTxbAvgMarkAdd;
+            set
+            {
+                isTxbAvgMarkAdd = value;
+                RaisePropertyChanged("IsTxbAvgMarkAdd");
+            }
+        }
+        public bool IsTxbAccumulationCreditAdd
+        {
+            get => isTxbAccumulationCreditAdd;
+            set
+            {
+                isTxbAccumulationCreditAdd = value;
+                RaisePropertyChanged("IsTxbAccumulationCreditAdd");
+            }
+        }
+        public bool IsDpkBirthDayAdd
+        {
+            get => isDpkBirthDayAdd;
+            set
+            {
+                isDpkBirthDayAdd = value;
+                RaisePropertyChanged("IsDpkBirthDayAdd");
+            }
+        }
+        public bool IsRdbSuperLeft
+        {
+            get => isRdbSuperLeft;
+            set
+            {
+                isRdbSuperLeft = value;
+                RaisePropertyChanged("IsRdbSuperLeft");
+            }
+        }
+        public bool IsRdbSuperRight
+        {
+            get => isRdbSuperRight; set
+            {
+                isRdbSuperRight = value;
+                RaisePropertyChanged("IsRdbSuperRight");
+            }
+        }
+        public bool IsRdbNormal
+        {
+            get => isRdbNormal;
+            set
+            {
+                isRdbNormal = value;
+                RaisePropertyChanged("IsRdbNormal");
+            }
+        }
+        public bool IsRdbFindId
+        {
+            get => isRdbFindId; set
+            {
+                isRdbFindId = value;
+                RaisePropertyChanged("IsRdbFindId");
+            }
+        }
+        public bool IsRdbFindName
+        {
+            get => isRdbFindName; set
+            {
+                isRdbFindName = value;
+                RaisePropertyChanged("IsRdbFindName");
+            }
+        }
+        public bool IsRdbFindAvgMark
+        {
+            get => isRdbFindAvgMark; set
+            {
+                isRdbFindAvgMark = value;
+                RaisePropertyChanged("IsRdbFindAvgMark");
+            }
+        }
+        public bool IsRdbFindAccumulationCredit
+        {
+            get => isRdbFindAccumulationCredit;
+            set
+            {
+                isRdbFindAccumulationCredit = value;
+                RaisePropertyChanged("IsRdbFindAccumulationCredit");
+            }
+        }
+        public bool IsRdbFindBirthDay
+        {
+            get => isRdbFindBirthDay;
+            set
+            {
+                isRdbFindBirthDay = value;
+                RaisePropertyChanged("IsRdbFindBirthDay");
+            }
+        }
+        public string TxbFindName
+        {
+            get => txbFindName;
+            set
+            {
+                txbFindName = value;
+                RaisePropertyChanged("TxbFindName");
+            }
+        }
+        public string TxbFindAvgMark
+        {
+            get => txbFindAvgMark;
+            set
+            {
+                txbFindAvgMark = value;
+                RaisePropertyChanged("TxbFindAvgMark");
+            }
+        }
+        public string TxbFindAccumulationCredit
+        {
+            get => txbFindAccumulationCredit;
+            set
+            {
+                txbFindAccumulationCredit = value;
+                RaisePropertyChanged("TxbFindAccumulationCredit");
+            }
+        }
+        public DateTime DpkFindBirthDay
+        {
+            get => dpkFindBirthDay;
+            set
+            {
+                dpkFindBirthDay = value;
+                RaisePropertyChanged("DpkFindBirthDay");
+            }
+        }
+        public string TxbFindId
+        {
+            get => txbFindId; set
+            {
+                txbFindId = value;
+                RaisePropertyChanged("TxbFindId");
+            }
+        }
         public IUtilities GetUtilities { get => getUtilities; set => getUtilities = value; }
         #endregion
 
@@ -278,15 +567,119 @@ namespace Wpf_AVLStudent.ViewModel
 
             await GetUtilities.DeleteNodeInGridAsync(grid, NumBeDelete);
         }
-        public ICommand BtnUpdateClickCommand { get { return btnUpdateClickCommand; } }
 
-        public ICommand BtnTraversal { get { return btnTraversal; } }
+        public ICommand BtnUpdateClickCommand { get
+            {
+                return btnUpdateClickCommand = new RelayCommand<Grid>(async (p) =>
+                {
+                    var studentUpdate = GetUtilities.Tree.FindNode(new Student(int.Parse(IdUpdate))).Data;
+                    if (studentUpdate == null || IsToggleBtnUpdate == true)//State :Find the student
+                    {
+                        var button =GetUtilities.FindButtonInGrid(p, IdUpdate);
+                        studentUpdate.Name = NameUpdate;
+                        studentUpdate.BirthDay = BirthDayUpdate;
+                        studentUpdate.AvgMark = int.Parse(AvgMarkUpdate);
+                        studentUpdate.AccumulationCredit = int.Parse(AccumulationCreditUpdate);
+                        ChangeStateTxbUpdate(false);
+                        (await button).Item2.ToolTip = studentUpdate.ToString();
+                    }
+                    else//State :Update
+                    {
+                        NameUpdate = studentUpdate.Name;
+                        AvgMarkUpdate = studentUpdate.AvgMark.ToString();
+                        AccumulationCreditUpdate = studentUpdate.AccumulationCredit.ToString();
+                        BirthDayUpdate = studentUpdate.BirthDay;
+                        ChangeStateTxbUpdate(true);
+                    }
+                });
+            }
+        }
 
-        public ICommand BtnGenerateData { get { return btnGenerateData; } }
+        public ICommand BtnTraversal
+        {
+            get
+            {
+                return btnTraversal = new RelayCommand<string>((p) =>
+                {
+                    var returnList = GetUtilities.Tree.GetType().GetMethod(p, new Type[] { }).Invoke(GetUtilities.Tree, new object[] { });
+                    ShowMessBoxTraversal(returnList as List<string>, p);
+                });
+            }
+        }
 
-        public ICommand BtnClear { get { return btnClear; } }
+        public ICommand BtnGenerateData
+        {
+            get
+            {
 
-        public ICommand ExpClearData { get { return expClearData; } }
+                return btnGenerateData = new RelayCommand<UIElement>(async (p) =>
+                {
+                    StringBuilder builder = new StringBuilder();
+                    List<Student> list = new List<Student>();
+                    if (IsRdbNormal)
+                    {
+                        list = GetData(5);
+                    }
+                    else if (isRdbSuperLeft)
+                    {
+                        list = GetRandomData<Student>(5);
+                        list.Reverse();
+                    }
+                    else if (IsRdbSuperRight)
+                    {
+                        list = GetRandomData<Student>(5);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Don't");
+                        return;
+                    }
+                    //var list = GetData(5);
+                    Student student;
+                    for (int i = 0; i < list.Count(); i++)
+                    {
+                        if ((p as Grid).Children.OfType<Button>().Where(pa => pa.Name.Equals($"Btn{list[i].Id.ToString()}")).ToList().Count != 0)
+                        {
+                            builder.Append(list[i].ToString() + "\n");
+                            continue;
+                        }
+                        student = new Student(list[i].Id, list[i].Name, list[i].BirthDay, list[i].AvgMark, list[i].AccumulationCredit);
+                        await GetUtilities.AddButtonGridAsync(p as Grid, student);
+                        await Task.Delay(1000);
+                    }
+                    if (builder.Length != 0)
+                    {
+                        MessageBox.Show("We can't add : \n" + builder.ToString());
+                    }
+                    return;
+                });
+            }
+        }
+
+        public ICommand BtnClear
+        {
+            get
+            {
+                return btnClear = new RelayCommand<UIElement>((p) =>
+                {
+                    (p as Grid).Children.Clear();
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
+                    GC.Collect();
+                });
+            }
+        }
+
+        public ICommand ExpClearData
+        {
+            get
+            {
+                return expClearData = new RelayCommand<string>((p) =>
+                {
+                    this.GetType().GetMethod("ClearData" + p, BindingFlags.NonPublic | BindingFlags.Instance).Invoke(this, new object[] { });
+                });
+            }
+        }
         #endregion
         #region Helper
         void ShowMessBoxTraversal(List<string> list, string name)
@@ -303,13 +696,11 @@ namespace Wpf_AVLStudent.ViewModel
         private void ClearDataExpAdd()
         {
             IsCkbAddArray = false;
-            RaisePropertyChanged("IsCkbAddArray");
             Id = "";
             Name = "";
             AccumulationCredit = "";
             AvgMark = "";
             BirthDay = DateTime.Now;
-            ChangeContentTxbAdd();
         }
 
         private void ClearDataExpFind()
@@ -319,21 +710,17 @@ namespace Wpf_AVLStudent.ViewModel
             TxbFindName = "";
             TxbFindAccumulationCredit = "";
             DpkFindBirthDay = DateTime.Now;
-            ChangeContentTxbFind();
             IsRdbFindAccumulationCredit = false;
             IsRdbFindAvgMark = false;
             IsRdbFindBirthDay = false;
             IsRdbFindId = false;
             IsRdbFindName = false;
-            ChangeStateRdbFind();
         }
 
         private void ClearDataExpDelete()
         {
             NumBeDelete = 0;
             IsCkbDeleteArray = false;
-            RaisePropertyChanged("NumBeDelete");
-            RaisePropertyChanged("IsCkbDeleteArray");
         }
 
         private void ClearDataExpUpdate()
@@ -343,7 +730,6 @@ namespace Wpf_AVLStudent.ViewModel
             AccumulationCreditUpdate = "";
             AvgMarkUpdate = "";
             BirthDayUpdate = DateTime.Now;
-            ChangeContentTxbUpdate();
             ChangeStateTxbUpdate(false);
 
         }
@@ -352,10 +738,7 @@ namespace Wpf_AVLStudent.ViewModel
         {
             IsRdbNormal = false;
             IsRdbSuperLeft = false;
-            IsRdbSuperRight = false;
-            RaisePropertyChanged("IsRdbSuperRight");
-            RaisePropertyChanged("IsRdbSuperLeft");
-            RaisePropertyChanged("IsRdbNormal");
+            IsRdbSuperRight = false;            
         }
 
         private List<T> GetRandomData<T>(int size)
@@ -381,44 +764,8 @@ namespace Wpf_AVLStudent.ViewModel
         public void ChangeStateTxbDelete(bool isenable)
         {
             IsTxbDeleteNode = !isenable;
-            RaisePropertyChanged("IsTxbDeleteNode");
         }
 
-        private void ChangeStateRdbFind()
-        {
-            RaisePropertyChanged("IsRdbFindId");
-            RaisePropertyChanged("IsRdbFindAvgMark");
-            RaisePropertyChanged("IsRdbFindName");
-            RaisePropertyChanged("IsRdbFindAccumulationCredit");
-            RaisePropertyChanged("IsRdbFindBirthDay");
-        }
-
-        private void ChangeContentTxbAdd()
-        {
-            RaisePropertyChanged("Id");
-            RaisePropertyChanged("AvgMark");
-            RaisePropertyChanged("Name");
-            RaisePropertyChanged("AccumulationCredit");
-            RaisePropertyChanged("BirthDay");
-        }
-
-        private void ChangeContentTxbFind()
-        {
-            RaisePropertyChanged("TxbFindId");
-            RaisePropertyChanged("TxbFindAvgMark");
-            RaisePropertyChanged("TxbFindName");
-            RaisePropertyChanged("TxbFindAccumulationCredit");
-            RaisePropertyChanged("DpkFindBirthDay");
-        }
-
-        public void ChangeContentTxbUpdate()
-        {
-            RaisePropertyChanged("IdUpdate");
-            RaisePropertyChanged("AvgMarkUpdate");
-            RaisePropertyChanged("NameUpdate");
-            RaisePropertyChanged("AccumulationCreditUpdate");
-            RaisePropertyChanged("BirthDayUpdate");
-        }
 
         public void ChangeStateTxbAdd(bool isenable)
         {
@@ -427,11 +774,6 @@ namespace Wpf_AVLStudent.ViewModel
             IsTxbNameAdd = !isenable;
             IsTxbAvgMarkAdd = !isenable;
             IsDpkBirthDayAdd = !isenable;
-            RaisePropertyChanged("IsTxbIdAdd");
-            RaisePropertyChanged("IsTxbAvgMarkAdd");
-            RaisePropertyChanged("IsTxbNameAdd");
-            RaisePropertyChanged("IsTxbAccumulationCreditAdd");
-            RaisePropertyChanged("IsDpkBirthDayAdd");
         }
 
         public void ChangeStateTxbUpdate(bool isenable)
@@ -442,12 +784,6 @@ namespace Wpf_AVLStudent.ViewModel
             IsTxbUpdateAvgMark = isenable;
             IsTxbUpdateAccumulationCredit = isenable;
             IsDpkUpdateBirthDay = isenable;
-            RaisePropertyChanged("IsTxbUpdateStudent");
-            RaisePropertyChanged("IsTxbUpdateAvgMark");
-            RaisePropertyChanged("IsTxbUpdateName");
-            RaisePropertyChanged("IsTxbUpdateAccumulationCredit");
-            RaisePropertyChanged("IsDpkUpdateBirthDay");
-            RaisePropertyChanged("IsToggle");
         }
 
         public Student[] GetDataFromExcel()

@@ -100,6 +100,8 @@
     <Compile Include="Model\ITree.cs" />
     <Compile Include="Model\Node.cs" />
     <Compile Include="Model\Student.cs" />
+    <Compile Include="MyUtilities\Helper.cs" />
+    <Compile Include="MyUtilities\IHelper.cs" />
     <Compile Include="MyUtilities\IUtilities.cs" />
     <Compile Include="MyUtilities\Utilities.cs" />
     <Compile Include="ValueConverters\Multiparamater.cs" />

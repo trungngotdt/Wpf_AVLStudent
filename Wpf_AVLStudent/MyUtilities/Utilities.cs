@@ -17,6 +17,7 @@ namespace Wpf_AVLStudent.MyUtilities
     public class Utilities:IUtilities
     {
         private ITree<Student> tree;
+        private IHelper helper;
 
         private int verticalMarging;
         private double heightGridBST;
@@ -26,7 +27,8 @@ namespace Wpf_AVLStudent.MyUtilities
         public int VerticalMarging { get => verticalMarging; set => verticalMarging = value; }
         public double WidthGridBST { get => widthGridBST; set => widthGridBST = value; }
         public double HeightGridBST { get => heightGridBST; set => heightGridBST = value; }
-        
+        public IHelper Helper { get => helper; set => helper = value; }
+
         #region Add a node to grid
 
         #region Draw line
@@ -640,7 +642,7 @@ namespace Wpf_AVLStudent.MyUtilities
         /// <param name="grid"></param>
         /// <param name="match">name of the button</param>
         /// <returns></returns>
-        async Task<Tuple<List<Task>, Button>> FindButtonInGrid(Grid grid, object match)
+        public async Task<Tuple<List<Task>, Button>> FindButtonInGrid(Grid grid, object match)
         {
             Button button = null;
             List<Task> listTask = new List<Task>();
@@ -774,6 +776,6 @@ namespace Wpf_AVLStudent.MyUtilities
 
         #endregion
 
-
+      
     }
 }

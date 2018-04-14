@@ -209,104 +209,120 @@ namespace Wpf_AVLStudent.Model
 
         #region Traversal
 
-        public void RNL(Node<T> node)
+        public List<string> NRL()
+        {
+            List<string> list = new List<string>();
+            NRL(Root, list);
+            return list;
+        }
+
+        private void NRL(Node<T> node, List<string> list)
         {
             if (node == null)
             {
                 return;
             }
-            RNL(node.Right);
-            Console.WriteLine(node.Data);
-            RNL(node.Left);
+            list.Add(node.Data.ToString());
+            NRL(node.Right, list);
+            NRL(node.Left, list);
         }
 
-        public void RNL()
+        public List<string> NLR()
         {
-            RNL(Root);
+            List<string> list = new List<string>();
+
+            NLR(Root, list);
+            return list;
         }
 
-        public void NRL()
-        {
-            NRL(Root);
-        }
-
-        public void NRL(Node<T> node)
+        private void NLR(Node<T> node, List<string> list)
         {
             if (node == null)
             {
                 return;
             }
-            Console.WriteLine(node.Data);
-            NRL(node.Right);
-            NRL(node.Left);
+            list.Add(node.Data.ToString());
+            NLR(node.Left, list);
+            NLR(node.Right, list);
         }
 
-        public void NLR()
-        {
-            NLR(Root);
-        }
-
-        public void NLR(Node<T> node)
+        private void LRN(Node<T> node, List<string> list)
         {
             if (node == null)
             {
                 return;
             }
-            Console.WriteLine(node.Data);
-            NLR(node.Left);
-            NLR(node.Right);
+            LRN(node.Left, list);
+            LRN(node.Right, list);
+            list.Add(node.Data.ToString());
         }
 
-        public void LRN(Node<T> node)
+        public List<string> LRN()
+        {
+            List<string> list = new List<string>();
+            LRN(Root, list);
+            return list;
+
+        }
+
+        private void RLN(Node<T> node, List<string> list)
         {
             if (node == null)
             {
                 return;
             }
-            LRN(node.Left);
-            LRN(node.Right);
-            Console.WriteLine(node.Data);
+            RLN(node.Right, list);
+            RLN(node.Left, list);
+            list.Add(node.Data.ToString());
         }
 
-        public void LRN()
+        public List<string> RLN()
         {
-            LRN(Root);
+            List<string> list = new List<string>();
+            RLN(Root, list);
+            return list;
+
         }
 
-        public void RLN(Node<T> node)
-        {
-            if (node == null)
-            {
-                return;
-            }
-            RLN(node.Right);
-            RLN(node.Left);
-            Console.WriteLine(node.Data);
-        }
-
-        public void RLN()
-        {
-            RLN(Root);
-        }
-
-        public void LNR(Node<T> node)
+        private void RNL(Node<T> node, List<string> list)
         {
             if (node == null)
             {
                 return;
             }
-            LNR(node.Left);
-            Console.WriteLine(node.Data);
-            LNR(node.Right);
+            RNL(node.Right, list);
+            list.Add(node.Data.ToString());
+            RNL(node.Left, list);
         }
 
-        public void LNR()
+        public List<string> RNL()
         {
-            LNR(Root);
+            List<string> list = new List<string>();
+
+            RNL(Root, list);
+            return list;
+        }
+
+        private void LNR(Node<T> node, List<string> list)
+        {
+            if (node == null)
+            {
+                return;
+            }
+            LNR(node.Left, list);
+            list.Add(node.Data.ToString());
+            LNR(node.Right, list);
+        }
+
+        public List<string> LNR()
+        {
+            List<string> list = new List<string>();
+            LNR(Root, list);
+            return list;
         }
 
         #endregion
-
+        
         #region Contains
         /// <summary>
         /// Determines whether an element is in the AVL
@@ -359,8 +375,7 @@ namespace Wpf_AVLStudent.Model
         {
             return FindNode(new Node<T>(data));
         }
-
-
+        
         public Node<T> FindNode(Node<T> node)
         {
             return FindNode(root, node);

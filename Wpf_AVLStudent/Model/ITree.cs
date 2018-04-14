@@ -90,29 +90,17 @@ namespace Wpf_AVLStudent.Model
         /// <returns></returns>
         bool Contains(Node<T> node);
 
-        void NRL();
+        List<string> NRL();
 
-        void NRL(Node<T> node);
+        List<string> NLR();
 
-        void NLR();
+        List<string> LRN();
 
-        void NLR(Node<T> node);
+        List<string> RLN();
 
-        void LRN(Node<T> node);
+        List<string> RNL();
 
-        void LRN();
-
-        void RLN(Node<T> node);
-
-        void RLN();
-
-        void RNL(Node<T> node);
-
-        void RNL();
-
-        void LNR(Node<T> node);
-
-        void LNR();
+        List<string> LNR();
 
         /// <summary>
         /// Searches for an parent of element that matches the conditions defined by the specified
