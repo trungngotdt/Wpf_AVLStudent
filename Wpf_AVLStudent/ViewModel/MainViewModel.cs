@@ -470,7 +470,7 @@ namespace Wpf_AVLStudent.ViewModel
             {
                 return btnAddNodeClickCommand = new RelayCommand<UIElement>(async (p) =>
                  {
-
+                     //Debug.WriteLine(Id.ToString());
                      Student student;
                      if (IsCkbAddArray)
                      {
@@ -483,6 +483,7 @@ namespace Wpf_AVLStudent.ViewModel
                                  builder.Append(list[i].ToString() + "\n");
                                  continue;
                              }
+                             Debug.WriteLine(list[i]. Id.ToString());
                              student = new Student(list[i].Id, list[i].Name, list[i].BirthDay, list[i].AvgMark, list[i].AccumulationCredit);
                              await GetUtilities.AddButtonGridAsync(p as Grid, student);
                              await Task.Delay(1000);
@@ -565,7 +566,7 @@ namespace Wpf_AVLStudent.ViewModel
                 return;
             }
 
-            await GetUtilities.DeleteNodeInGridAsync(grid, NumBeDelete);
+            await GetUtilities.DeleteNodeInGridAsync(grid, id);
         }
 
         public ICommand BtnUpdateClickCommand { get
@@ -611,7 +612,18 @@ namespace Wpf_AVLStudent.ViewModel
         {
             get
             {
-
+                /*
+                 * 610
+                    816
+                    843
+                    750
+                    278
+                    794
+                    508
+                    1147
+                    701
+                    118
+                 */
                 return btnGenerateData = new RelayCommand<UIElement>(async (p) =>
                 {
                     StringBuilder builder = new StringBuilder();
@@ -638,11 +650,16 @@ namespace Wpf_AVLStudent.ViewModel
                     Student student;
                     for (int i = 0; i < list.Count(); i++)
                     {
+                        if (list[i].Id<=0)
+                        {
+                            continue;
+                        }
                         if ((p as Grid).Children.OfType<Button>().Where(pa => pa.Name.Equals($"Btn{list[i].Id.ToString()}")).ToList().Count != 0)
                         {
                             builder.Append(list[i].ToString() + "\n");
                             continue;
                         }
+                        Debug.WriteLine(list[i]. Id.ToString());
                         student = new Student(list[i].Id, list[i].Name, list[i].BirthDay, list[i].AvgMark, list[i].AccumulationCredit);
                         await GetUtilities.AddButtonGridAsync(p as Grid, student);
                         await Task.Delay(1000);
