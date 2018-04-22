@@ -49,7 +49,7 @@ namespace Wpf_AVLStudent.ViewModel
         private DateTime dpkFindBirthDay = DateTime.Now;
         private string txbFindId;
 
-        private int numbeFind;
+        
         private string idDelete;
         private bool isRdbFindId;
         private bool isRdbFindName;
@@ -471,14 +471,13 @@ namespace Wpf_AVLStudent.ViewModel
         /// </summary>
         public MainViewModel(ITree<Student> tree, IUtilities utilities)
         {
-
+            this. HeightGridBST = 705;
+            this.WidthGridBST = 1138.3333333333335;
             this.getUtilities = utilities;
             getUtilities.Tree = tree;
-            HeightGridBST = 705;
-            WidthGridBST = 1138.3333333333335;
-            getUtilities.WidthGridBST = WidthGridBST;
-            getUtilities.VerticalMarging = VerticalMarging;
-            getUtilities.HeightGridBST = HeightGridBST;
+            getUtilities.WidthGridBST =this. WidthGridBST;
+            getUtilities.VerticalMarging = this.VerticalMarging;
+            getUtilities.HeightGridBST = this.HeightGridBST;
 
         }
 
@@ -491,13 +490,20 @@ namespace Wpf_AVLStudent.ViewModel
                 return btnAddNodeClickCommand = new RelayCommand<UIElement>(async (p) =>
                  {
                      //Debug.WriteLine(Id.ToString());
-                     Student student;
+                     
                      if (IsCkbAddArray)
                      {
                          StringBuilder builder = new StringBuilder();
                          var list = GetDataFromExcel();
                          for (int i = 0; i < list.Length; i++)
                          {
+                             bool isAdd = await HelpCommandAddNodeAsync(p as Grid, list[i].Id.ToString(), list[i].Name, list[i].BirthDay, list[i].AvgMark.ToString(), list[i].AccumulationCredit.ToString());
+                             if (isAdd==false)
+                             {
+                                 builder.Append(list[i].ToString() + "\n");
+                                 continue;
+                             }
+                             /*
                              if ((p as Grid).Children.OfType<Button>().Where(pa => pa.Name.Equals($"Btn{list[i].Id.ToString()}")).ToList().Count != 0)
                              {
                                  builder.Append(list[i].ToString() + "\n");
@@ -507,6 +513,7 @@ namespace Wpf_AVLStudent.ViewModel
                              Debug.WriteLine(list[i]. Id.ToString());
                              student = new Student(list[i].Id, list[i].Name, list[i].BirthDay, list[i].AvgMark, list[i].AccumulationCredit);
                              await GetUtilities.AddButtonGridAsync(p as Grid, student);
+                             */
                              await Task.Delay(1000);
                          }
                          if (builder.Length != 0)
@@ -515,6 +522,8 @@ namespace Wpf_AVLStudent.ViewModel
                          }
                          return;
                      }
+                     await HelpCommandAddNodeAsync(p as Grid, Id, Name, BirthDay, AvgMark, AccumulationCredit);
+                     /*
                      if ((Id.Trim().Length == 0) || (p as Grid).Children.OfType<Button>().Where(pa => pa.Name.Equals($"Btn{Id.ToString()}")).ToList().Count != 0)
                      {
                          MessageBox.Show($"We can't add {Id.ToString()}");
@@ -529,8 +538,29 @@ namespace Wpf_AVLStudent.ViewModel
                      await GetUtilities.AddButtonGridAsync(p as Grid, student);
                      HeightGridBST = GetUtilities.HeightGridBST;
                      WidthGridBST = GetUtilities.WidthGridBST;
+                     */
                  });
             }
+        }
+
+        private async Task<bool> HelpCommandAddNodeAsync(Grid grid,string id,string name,DateTime date,string avgmark,string accumulationcredit)
+        {
+            if ((id.Trim().Length == 0) || grid.Children.OfType<Button>().Where(pa => pa.Name.Equals($"Btn{id.ToString()}")).ToList().Count != 0)
+            {
+                MessageBox.Show($"We can't add {id.ToString()}");
+                return false;
+            }
+            if (name == null || id == null || avgmark == null || accumulationcredit == null)
+            {
+                MessageBox.Show("We don't have enough data to add node!");
+                return false;
+            }
+            var student = new Student(int.Parse(id), name, birthDay, float.Parse(avgmark), int.Parse(accumulationcredit));
+            await GetUtilities.AddButtonGridAsync(grid, student);
+            HeightGridBST = GetUtilities.HeightGridBST;
+            WidthGridBST = GetUtilities.WidthGridBST;
+            Tree = GetUtilities.Tree;
+            return true;
         }
 
         public ICommand BtnFindNodeClickCommand
@@ -645,19 +675,7 @@ namespace Wpf_AVLStudent.ViewModel
         public ICommand BtnGenerateData
         {
             get
-            {
-                /*
-                 * 610
-                    816
-                    843
-                    750
-                    278
-                    794
-                    508
-                    1147
-                    701
-                    118
-                 */
+            {                
                 return btnGenerateData = new RelayCommand<UIElement>(async (p) =>
                 {
                     StringBuilder builder = new StringBuilder();
@@ -677,17 +695,23 @@ namespace Wpf_AVLStudent.ViewModel
                     }
                     else
                     {
-                        MessageBox.Show("Don't");
+                        MessageBox.Show("Don't have any choice");
                         return;
                     }
-                    //var list = GetData(5);
-                    Student student;
+                    
                     for (int i = 0; i < list.Count(); i++)
                     {
                         if (list[i].Id<=0)
                         {
                             continue;
                         }
+                        bool isAdd = await HelpCommandAddNodeAsync(p as Grid, list[i].Id.ToString(), list[i].Name, list[i].BirthDay, list[i].AvgMark.ToString(), list[i].AccumulationCredit.ToString());
+                        if (isAdd == false)
+                        {
+                            builder.Append(list[i].ToString() + "\n");
+                            continue;
+                        }
+                        /*
                         if ((p as Grid).Children.OfType<Button>().Where(pa => pa.Name.Equals($"Btn{list[i].Id.ToString()}")).ToList().Count != 0)
                         {
                             builder.Append(list[i].ToString() + "\n");
@@ -696,6 +720,7 @@ namespace Wpf_AVLStudent.ViewModel
                         Debug.WriteLine(list[i]. Id.ToString());
                         student = new Student(list[i].Id, list[i].Name, list[i].BirthDay, list[i].AvgMark, list[i].AccumulationCredit);
                         await GetUtilities.AddButtonGridAsync(p as Grid, student);
+                        */                    
                         await Task.Delay(1000);
                     }
                     if (builder.Length != 0)
@@ -732,6 +757,8 @@ namespace Wpf_AVLStudent.ViewModel
             }
         }
         #endregion
+
+
         #region Helper
         void ShowMessBoxTraversal(List<string> list, string name)
         {
@@ -872,7 +899,8 @@ namespace Wpf_AVLStudent.ViewModel
             }
             return null;
         }
-        #endregion
+#endregion
+
         ////public override void Cleanup()
         ////{
         ////    // Clean up if needed

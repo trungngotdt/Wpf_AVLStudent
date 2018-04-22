@@ -37,7 +37,7 @@ namespace Wpf_AVLStudent.MyUtilities
         /// <param name="grid"></param>
         /// <param name="nodeDelete"></param>
         Task DeleteNodeInGridAsync(Grid grid, int nodeDelete);
-
+        
         /// <summary>
         /// Find the Button in grid  - async
         /// </summary>

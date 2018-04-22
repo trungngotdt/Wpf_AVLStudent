@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ignore="http://www.galasoft.ch/ignore"
         mc:Ignorable="d ignore"
-        Title="MVVM Light Application"
+        Title="AVL Application"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
         xmlns:multiparaAddNode="clr-namespace:Wpf_AVLStudent.ValueConverters"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"

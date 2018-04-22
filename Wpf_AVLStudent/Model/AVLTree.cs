@@ -28,11 +28,11 @@ namespace Wpf_AVLStudent.Model
         /// Adds the elements of the specified collection to the AVL
         /// </summary>
         /// <param name="node"></param>
-        public void AddRange(Node<T>[] node)
+        public async Task AddRangeAsync(Node<T>[] node)
         {
             foreach (var item in node)
             {
-                Insert(item.Data);
+                await InsertAsync(item.Data);
             }
         }
 
@@ -40,18 +40,18 @@ namespace Wpf_AVLStudent.Model
         /// Adds the elements of the specified collection to the AVL
         /// </summary>
         /// <param name="node"></param>
-        public void AddRange(T[] data)
+        public async Task AddRangeAsync(T[] data)
         {
             foreach (var item in data)
             {
-                Insert(item);
+                await InsertAsync(item);
             }
         }
         #endregion        
 
         #region GetSuccessor
         /// <summary>
-        /// Find inorder successor of a BST
+        /// Find inorder successor of a AVL
         /// </summary>
         /// <returns><seealso cref="Node{T}"/></returns>
         public object Successor()
@@ -84,7 +84,7 @@ namespace Wpf_AVLStudent.Model
         }
 
         /// <summary>
-        /// Find inorder predecessor of a BST
+        /// Find inorder predecessor of a AVL
         /// </summary>
         /// <returns></returns>
         public object Predecessor()
@@ -102,21 +102,23 @@ namespace Wpf_AVLStudent.Model
         /// </summary>
         /// <param name="node"></param>
         /// <returns></returns>
-        public int Height(Node<T> node)
+        public async Task<int> HeightAsync(Node<T> node)
         {
             if (node == null) return -1;
-            var leftH = Height(node.Left);
-            var rightH = Height(node.Right);
-            return Math.Max(leftH, rightH) + 1;
+            var leftH = HeightAsync(node.Left);
+            var rightH = HeightAsync(node.Right);
+            await Task.WhenAll(new Task[] {leftH,rightH });
+            return Math.Max(leftH.Result, rightH.Result) + 1;
         }
 
         /// <summary>
         /// Find height of node root
         /// </summary>
         /// <returns></returns>
-        public int Height()
+        public async Task<int> HeightAsync()
         {
-            return Height(Root);
+            int height = await HeightAsync(Root);
+            return height;
         }
 
         #endregion
@@ -471,38 +473,36 @@ namespace Wpf_AVLStudent.Model
         /// Insert a value to
         /// </summary>
         /// <param name="key"></param>
-        public void Insert(T key)
+        public async Task InsertAsync(T key)
         {
             if (key == null)
             {
                 return;
             }
-            Root = new Node<T>(Insert(Root,new Node<T>( key)));
+            Root = new Node<T>(await InsertAsync(Root,new Node<T>( key)));
         }
 
-        public void Insert(Node<T> node)
+        public async Task InsertAsync(Node<T> node)
         {
             if (node == null)
             {
                 return;
             }
-            Root = Insert(Root, node);
+            Root =await InsertAsync(Root, node);
         }
 
-        private Node<T> Insert(Node<T> x,Node< T> key)
+        private async Task<Node<T>> InsertAsync(Node<T> x,Node< T> key)
         {
             if (x == null)
                 return key;
-            int cmp = key.CompareTo(x.Data);
+            int cmp = key.CompareTo(x);
             if (cmp < 0)
-                x.Left = Insert(x.Left, key);
+                x.Left =await InsertAsync(x.Left, key);
             else if (cmp > 0)
-                x.Right = Insert(x.Right, key);
+                x.Right =await InsertAsync(x.Right, key);
             else
                 x.Data = key.Data;
-            x = Balance(x);
-            /*x.size = 1 + size(x.left) + size(x.right);*/
-            x.HeightNode = Height(x);
+            x =await BalanceAsync(x);
             return x;
         }
 
@@ -544,7 +544,6 @@ namespace Wpf_AVLStudent.Model
                 return x.Right;
             x.Left = RemoveMin(x.Left);
             //x.size = size(x.left) + size(x.right) + 1;
-            x.HeightNode = 1 + Math.Max(Height(x.Left), Height(x.Right));
             return x;
         }
 
@@ -563,9 +562,9 @@ namespace Wpf_AVLStudent.Model
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public bool Remove(T data)
+        public async Task<bool> RemoveAsync(T data)
         {
-            var x = Remove(Root, data);
+            var x =await RemoveAsync(Root, data);
             Root = x;
             if (this.Contains(data))
             {
@@ -579,13 +578,13 @@ namespace Wpf_AVLStudent.Model
         /// </summary>
         /// <param name="node"></param>
         /// <returns></returns>
-        public bool Remove(Node<T> node)
+        public async Task<bool> RemoveAsync(Node<T> node)
         {
             if (node == null)
             {
                 return false;
             }
-            return Remove(node.Data);
+            return await RemoveAsync(node.Data);
         }
 
         /// <summary>
@@ -594,14 +593,14 @@ namespace Wpf_AVLStudent.Model
         /// <param name="x"></param>
         /// <param name="key"></param>
         /// <returns></returns>
-        private Node<T> Remove(Node<T> x, T key)
+        private async Task<Node<T>> RemoveAsync(Node<T> x, T key)
         {
             if (x == null) return null;
-            int cmp = key.CompareTo(x.Data);
+            int cmp = key.CompareTo(x);
             if (cmp < 0)
-                x.Left = Remove(x.Left, key);
+                x.Left =await RemoveAsync(x.Left, key);
             else if (cmp > 0)
-                x.Right = Remove(x.Right, key);
+                x.Right =await RemoveAsync(x.Right, key);
             else
             {
                 if (x.Right == null)
@@ -613,7 +612,7 @@ namespace Wpf_AVLStudent.Model
                 x.Right = RemoveMin(t.Right);
                 x.Left = t.Left;
             }
-            x = Balance(x);
+            x =await BalanceAsync(x);
             //x.size = size(x.left) + size(x.right) + 1;
             return x;
         }
@@ -626,19 +625,22 @@ namespace Wpf_AVLStudent.Model
         /// </summary>
         /// <param name="x"></param>
         /// <returns></returns>
-        private Node<T> Balance(Node<T> x)
+        private async Task<Node<T>> BalanceAsync(Node<T> x)
         {
-            if (CheckBalance(x) < -1)
+            var check = await CheckBalanceAsync(x);
+            if (check < -1)
             {
-                if (CheckBalance(x.Right) > 0)
+                var checkRight =await CheckBalanceAsync(x.Right);
+                if (checkRight > 0)
                 {
                     x.Right = RotateRight(x.Right);
                 }
                 x = RotateLeft(x);
             }
-            else if (CheckBalance(x) > 1)
+            else if (check > 1)
             {
-                if (CheckBalance(x.Left) < 0)
+                var checkLeft =await CheckBalanceAsync(x.Left);
+                if (checkLeft < 0)
                 {
                     x.Left = RotateLeft(x.Left);
                 }
@@ -653,9 +655,12 @@ namespace Wpf_AVLStudent.Model
         /// </summary>
         /// <param name="x"></param>
         /// <returns></returns>
-        private int CheckBalance(Node<T> x)
+        private async Task<int> CheckBalanceAsync(Node<T> x)
         {
-            return Height(x.Left) - Height(x.Right);
+            var left = HeightAsync(x.Left);
+            var right = HeightAsync(x.Right);
+            await Task.WhenAll(new Task[] {left,right });
+            return left.Result - right.Result;
         }
 
         private Node<T> RotateLeft(Node<T> x)
@@ -663,10 +668,6 @@ namespace Wpf_AVLStudent.Model
             Node<T> y = x.Right;
             x.Right = y.Left;
             y.Left = x;
-            //y.size = x.size;
-            //x.size = 1 + size(x.left) + size(x.right);
-            x.HeightNode = 1 + Math.Max(Height(x.Left), Height(x.Right));
-            y.HeightNode = 1 + Math.Max(Height(y.Left), Height(y.Right));
             return y;
 
         }
@@ -676,20 +677,18 @@ namespace Wpf_AVLStudent.Model
             Node<T> y = x.Left;
             x.Left = y.Right;
             y.Right = x;
-            x.HeightNode = 1 + Math.Max(Height(x.Left), Height(x.Right));
-            y.HeightNode = 1 + Math.Max(Height(y.Left), Height(y.Right));
             return y;
 
         }
         #endregion
 
         #region RemoveRange
-        public List<Node<T>> RemoveRange(Node<T>[] node)
+        public async Task<List<Node<T>>> RemoveRangeAsync(Node<T>[] node)
         {
             var list = new List<Node<T>>();
             foreach (var item in node)
             {
-                var check = Remove(item);
+                var check =await RemoveAsync(item);
                 if (!check)
                 {
                     list.Add(item);

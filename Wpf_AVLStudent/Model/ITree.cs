@@ -11,19 +11,30 @@ namespace Wpf_AVLStudent.Model
     {
         Node<T> Root { get; set; }
 
-        int Height(Node<T> node);
-        int Height();
         /// <summary>
-        /// Adds the elements of the specified collection to the BST
+        /// Get height of tree
         /// </summary>
         /// <param name="node"></param>
-        void AddRange(Node<T>[] node);
+        /// <returns></returns>
+        Task< int> HeightAsync(Node<T> node);
 
         /// <summary>
-        /// Adds the elements of the specified collection to the BST
+        /// Get height of tree
+        /// </summary>
+        /// <returns></returns>
+        Task< int> HeightAsync();
+
+        /// <summary>
+        /// Adds the elements of the specified collection to the AVL
+        /// </summary>
+        /// <param name="node"></param>
+        Task AddRangeAsync(Node<T>[] node);
+
+        /// <summary>
+        /// Adds the elements of the specified collection to the AVL
         /// </summary>
         /// <param name="data"></param>
-        void AddRange(T[] data);
+        Task AddRangeAsync(T[] data);
 
         /// <summary>
         /// Find inorder predecessor of a node
@@ -32,13 +43,13 @@ namespace Wpf_AVLStudent.Model
         object Predecessor(Node<T> node);
 
         /// <summary>
-        /// Find inorder predecessor of a BST
+        /// Find inorder predecessor of a AVL
         /// </summary>
         /// <returns></returns>
         object Predecessor();
 
         /// <summary>
-        /// Find inorder successor of a BST
+        /// Find inorder successor of a AVL
         /// </summary>
         /// <returns><seealso cref="Node{T}"/></returns>
         object Successor();
@@ -58,13 +69,13 @@ namespace Wpf_AVLStudent.Model
         Node<T> GetMin(Node<T> node);
 
         /// <summary>
-        ///Return a minimum value in BST 
+        ///Return a minimum value in AVL 
         /// </summary>
         /// <returns></returns>
         Node<T> GetMin();
 
         /// <summary>
-        /// Return a maximum value in BST
+        /// Return a maximum value in AVL
         /// </summary>
         /// <returns></returns>
         Node<T> GetMax();
@@ -77,14 +88,14 @@ namespace Wpf_AVLStudent.Model
         Node<T> GetMax(Node<T> node);
 
         /// <summary>
-        /// Determines whether an element is in the BST
+        /// Determines whether an element is in the AVL
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
         bool Contains(T data);
 
         /// <summary>
-        /// Determines whether an element is in the BST
+        /// Determines whether an element is in the AVL
         /// </summary>
         /// <param name="node"></param>
         /// <returns></returns>
@@ -133,38 +144,38 @@ namespace Wpf_AVLStudent.Model
         Node<T> FindNode(Node<T> nodeRoot, Node<T> node);
 
         /// <summary>
-        /// Remove the elements in BST - tree root
+        /// Remove the elements in AVL - tree root
         /// Return list of element can't removed
         /// </summary>
         /// <param name="node"></param>
         /// <returns></returns>
-        List<Node<T>> RemoveRange(Node<T>[] node);
+        Task< List<Node<T>>> RemoveRangeAsync(Node<T>[] node);
 
         /// <summary>
-        ///  Remove a element in BST - tree root
+        ///  Remove a element in AVL - tree root
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        bool Remove(T data);
+        Task< bool> RemoveAsync(T data);
 
         /// <summary>
-        ///  Remove a element in BST - tree root
+        ///  Remove a element in AVL - tree root
         /// </summary>
         /// <param name="node"></param>
         /// <returns></returns>
-        bool Remove(Node<T> node);
+        Task< bool> RemoveAsync(Node<T> node);
 
         /// <summary>
-        /// Adds an object to the BST
+        /// Adds an object to the AVL
         /// </summary>
         /// <param name="item"></param>
-        void Insert(Node<T> item);
+        Task InsertAsync(Node<T> item);
 
         /// <summary>
-        /// Adds an object to the BST
+        /// Adds an object to the AVL
         /// </summary>
         /// <param name="item"></param>
-        void Insert(T item);
+        Task InsertAsync(T item);
 
         void InsertNoRotation(Node<T> x);
 

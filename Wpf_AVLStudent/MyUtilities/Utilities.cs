@@ -10,7 +10,6 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Wpf_AVLStudent.Model;
-using GalaSoft.MvvmLight;
 
 namespace Wpf_AVLStudent.MyUtilities
 {
@@ -22,12 +21,14 @@ namespace Wpf_AVLStudent.MyUtilities
         private int verticalMarging;
         private double heightGridBST;
         private double widthGridBST;
+        private int maxHeight=5;
 
         public ITree<Student> Tree { get => tree; set => tree = value; }
         public int VerticalMarging { get => verticalMarging; set => verticalMarging = value; }
         public double WidthGridBST { get => widthGridBST; set => widthGridBST = value; }
         public double HeightGridBST { get => heightGridBST; set => heightGridBST = value; }
         public IHelper Helper { get => helper; set => helper = value; }
+        public int MaxHeight { get => maxHeight; set => maxHeight = value; }
         #region Balance
         /// <summary>
         /// Keeping tree's balance
@@ -36,18 +37,21 @@ namespace Wpf_AVLStudent.MyUtilities
         /// <returns></returns>
         private async Task<Node<Student>> BalanceAsync(Node<Student> x, UIElement p)
         {
-            if (CheckBalance(x) < -1)
+            var check = await CheckBalanceAsync(x);
+            if (check < -1)
             {
-                if (CheckBalance(x.Right) > 0)
+                var checkRight = await CheckBalanceAsync(x.Right);
+                if (checkRight > 0)
                 {
                     (p as Grid).Children.Remove((p as Grid).Children.OfType<Line>().FirstOrDefault(l => Regex.Split(l.Name, "Btn")[2] == x.Right.Left.Data.Id.ToString()));
                     x.Right = await RotateRightAsync(x.Right, (p as Grid));
                 }
                 x = await RotateLeftAsync(x, (p as Grid));
             }
-            else if (CheckBalance(x) > 1)
+            else if (check > 1)
             {
-                if (CheckBalance(x.Left) < 0)
+                var checkLeft = await CheckBalanceAsync(x.Left);
+                if (checkLeft < 0)
                 {
                     (p as Grid).Children.Remove((p as Grid).Children.OfType<Line>().FirstOrDefault(l => Regex.Split(l.Name, "Btn")[2] == x.Left.Right.Data.Id.ToString()));
                     x.Left = await RotateLeftAsync(x.Left, (p as Grid));
@@ -63,9 +67,12 @@ namespace Wpf_AVLStudent.MyUtilities
         /// </summary>
         /// <param name="x"></param>
         /// <returns></returns>
-        private int CheckBalance(Node<Student> x)
+        private async Task<int> CheckBalanceAsync(Node<Student> x)
         {
-            return Tree.Height(x.Left) - Tree.Height(x.Right);
+            var left = Tree.HeightAsync(x.Left);
+            var right = Tree.HeightAsync(x.Right);
+            await Task.WhenAll(new Task[] {left,right });
+            return left.Result-right.Result;
         }
 
         private async Task<Node<Student>> RotateLeftAsync(Node<Student> x, UIElement p)
@@ -187,6 +194,7 @@ namespace Wpf_AVLStudent.MyUtilities
             await Task.WhenAll(new Task[] { taskLeft, taskRight });
         }
         #endregion
+
         #region Add a node to grid
 
         #region Draw line
@@ -252,7 +260,7 @@ namespace Wpf_AVLStudent.MyUtilities
             double y = 0;
             if ((p as Grid).Children.OfType<Button>().Count<Button>() == 0)
             {
-                Tree.Insert(new Node<Student>(student, (p as Grid).ActualWidth / 2, VerticalMarging));
+                await Tree.InsertAsync(new Node<Student>(student, (p as Grid).ActualWidth / 2, VerticalMarging));
                 AddNode(p as Grid, student, new Thickness((p as Grid).ActualWidth / 2, VerticalMarging, 0, 0));
                 return;
             }
@@ -282,12 +290,13 @@ namespace Wpf_AVLStudent.MyUtilities
                 }
                 node.X = x;
                 node.Y = y;
-                if (x + 50 >= WidthGridBST || x - 50 <= 0)
+                if ((await Tree.HeightAsync()) == MaxHeight)
                 {
                     ResizeGrid();
                     (p as Grid).Width = WidthGridBST;
                     (p as Grid).Height = HeightGridBST;
                     await ReLayoutAllButtonAsync(p as Grid);
+                    MaxHeight++;
                 }
                 DrawLine(p as Grid, checkExitsParent.Item1.X, node.X, checkExitsParent.Item1.Y, node.Y, checkExitsParent.Item2 > 0, $"{"Btn" + checkExitsParent.Item1.Data.Id.ToString() + "Btn" + node.Data.Id.ToString() }");
 
