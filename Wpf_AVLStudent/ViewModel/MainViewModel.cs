@@ -50,7 +50,7 @@ namespace Wpf_AVLStudent.ViewModel
         private string txbFindId;
 
         private int numbeFind;
-        private int numBeDelete;
+        private string idDelete;
         private bool isRdbFindId;
         private bool isRdbFindName;
         private bool isRdbFindAvgMark;
@@ -86,7 +86,26 @@ namespace Wpf_AVLStudent.ViewModel
         private ICommand btnGenerateData;
         private ICommand btnClear;
         private ICommand expClearData;
+        public double WidthGridBST
+        {
+            get => widthGridBST;
+            set
+            {
+                widthGridBST = value;
+                RaisePropertyChanged("WidthGridBST");
+            }
+        }
+        public double HeightGridBST
+        {
+            get => heightGridBST;
+            set
+            {
+                heightGridBST = value;
+                RaisePropertyChanged("HeightGridBST");
+            }
+        }
 
+        #region Update
         public string IdUpdate
         {
             get => idUpdate;
@@ -129,90 +148,6 @@ namespace Wpf_AVLStudent.ViewModel
             {
                 birthDayUpdate = value;
                 RaisePropertyChanged("BirthDayUpdate");
-            }
-        }
-
-        public string Id
-        {
-            get => id;
-            set
-            {
-                id = value;
-                RaisePropertyChanged("Id");
-            }
-        }
-        public string Name
-        {
-            get => name;
-            set
-            {
-                name = value;
-                RaisePropertyChanged("Name");
-            }
-        }
-        public string AvgMark
-        {
-            get => avgMark;
-            set
-            {
-                avgMark = value;
-                RaisePropertyChanged("AvgMark");
-            }
-        }
-        public string AccumulationCredit
-        {
-            get => accumulationCredit;
-            set
-            {
-                accumulationCredit = value;
-                RaisePropertyChanged("AccumulationCredit");
-            }
-        }
-        public DateTime BirthDay
-        {
-            get => birthDay;
-            set
-            {
-                birthDay = value;
-                RaisePropertyChanged("BirthDay");
-            }
-        }
-
-        public int NumBeDelete
-        {
-            get => numBeDelete;
-            set
-            {
-                numBeDelete = value;
-                RaisePropertyChanged("NumBeDelete");
-            }
-        }
-        public double WidthGridBST
-        {
-            get => widthGridBST;
-            set
-            {
-                widthGridBST = value;
-                RaisePropertyChanged("WidthGridBST");
-            }
-        }
-        public double HeightGridBST
-        {
-            get => heightGridBST;
-            set
-            {
-                heightGridBST = value;
-                RaisePropertyChanged("HeightGridBST");
-            }
-        }
-
-        public bool IsTxbDeleteNode
-        {
-            get => isTxbDeleteNode;
-            set
-            {
-                isTxbDeleteNode = value;
-                RaisePropertyChanged("IsTxbDeleteNode");
             }
         }
         public bool IsToggleBtnUpdate
@@ -269,24 +204,55 @@ namespace Wpf_AVLStudent.ViewModel
                 RaisePropertyChanged("IsTxbUpdateAccumulationCredit");
             }
         }
-        public bool IsCkbAddArray
+        #endregion
+
+        #region Add
+        public string Id
         {
-            get
+            get => id;
+            set
             {
-                ChangeStateTxbAdd(isCkbAddArray);
-                return isCkbAddArray;
+                id = value;
+                RaisePropertyChanged("Id");
             }
-            set => isCkbAddArray = value;
         }
-        public bool IsCkbDeleteArray
+        public string Name
         {
-            get
+            get => name;
+            set
             {
-                ChangeStateTxbDelete(isCkbDeleteArray);
-                return isCkbDeleteArray;
+                name = value;
+                RaisePropertyChanged("Name");
             }
-            set => isCkbDeleteArray = value;
         }
+        public string AvgMark
+        {
+            get => avgMark;
+            set
+            {
+                avgMark = value;
+                RaisePropertyChanged("AvgMark");
+            }
+        }
+        public string AccumulationCredit
+        {
+            get => accumulationCredit;
+            set
+            {
+                accumulationCredit = value;
+                RaisePropertyChanged("AccumulationCredit");
+            }
+        }
+        public DateTime BirthDay
+        {
+            get => birthDay;
+            set
+            {
+                birthDay = value;
+                RaisePropertyChanged("BirthDay");
+            }
+        }
+
         public bool IsTxbIdAdd
         {
             get => isTxbIdAdd; set
@@ -331,6 +297,53 @@ namespace Wpf_AVLStudent.ViewModel
                 RaisePropertyChanged("IsDpkBirthDayAdd");
             }
         }
+        public bool IsCkbAddArray
+        {
+            get
+            {
+                ChangeStateTxbAdd(isCkbAddArray);
+                return isCkbAddArray;
+            }
+            set => isCkbAddArray = value;
+        }
+        #endregion
+
+        #region Delete
+        public string IdDelete
+        {
+            get => idDelete;
+            set
+            {
+                idDelete = value;
+                RaisePropertyChanged("IdDelete");
+            }
+        }
+
+
+        public bool IsTxbDeleteNode
+        {
+            get => isTxbDeleteNode;
+            set
+            {
+                isTxbDeleteNode = value;
+                RaisePropertyChanged("IsTxbDeleteNode");
+            }
+        }
+
+        public bool IsCkbDeleteArray
+        {
+            get
+            {
+                ChangeStateTxbDelete(isCkbDeleteArray);
+                return isCkbDeleteArray;
+            }
+            set => isCkbDeleteArray = value;
+        }
+
+        #endregion
+                
+        #region GenerateData
+
         public bool IsRdbSuperLeft
         {
             get => isRdbSuperLeft;
@@ -357,6 +370,10 @@ namespace Wpf_AVLStudent.ViewModel
                 RaisePropertyChanged("IsRdbNormal");
             }
         }
+
+        #endregion
+
+        #region Find
         public bool IsRdbFindId
         {
             get => isRdbFindId; set
@@ -443,6 +460,9 @@ namespace Wpf_AVLStudent.ViewModel
                 RaisePropertyChanged("TxbFindId");
             }
         }
+
+        #endregion
+
         public IUtilities GetUtilities { get => getUtilities; set => getUtilities = value; }
         #endregion
 
@@ -483,6 +503,7 @@ namespace Wpf_AVLStudent.ViewModel
                                  builder.Append(list[i].ToString() + "\n");
                                  continue;
                              }
+                             
                              Debug.WriteLine(list[i]. Id.ToString());
                              student = new Student(list[i].Id, list[i].Name, list[i].BirthDay, list[i].AvgMark, list[i].AccumulationCredit);
                              await GetUtilities.AddButtonGridAsync(p as Grid, student);
@@ -497,6 +518,11 @@ namespace Wpf_AVLStudent.ViewModel
                      if ((Id.Trim().Length == 0) || (p as Grid).Children.OfType<Button>().Where(pa => pa.Name.Equals($"Btn{Id.ToString()}")).ToList().Count != 0)
                      {
                          MessageBox.Show($"We can't add {Id.ToString()}");
+                         return;
+                     }
+                     if (Name==null||Id==null||AvgMark==null||AccumulationCredit==null)
+                     {
+                         MessageBox.Show("We don't have enough data to add node!");
                          return;
                      }
                      student = new Student(int.Parse(Id), Name, BirthDay, float.Parse(AvgMark), int.Parse(AccumulationCredit));
@@ -524,7 +550,7 @@ namespace Wpf_AVLStudent.ViewModel
                     propertyContent = (p[1] as WrapPanel).Children.OfType<TextBox>().Where(t => t.IsEnabled).FirstOrDefault().Text;
 
                     List<Student> students = GetUtilities.Tree.ToList().Where(pr => pr.GetType().GetProperty(propertyName).GetValue(pr, null).ToString().Equals(propertyContent)).ToList();
-                    if (students == null)
+                    if (students.Count==0 )
                     {
                         MessageBox.Show("Don't have this student");
                         return;
@@ -549,32 +575,40 @@ namespace Wpf_AVLStudent.ViewModel
                         var list = GetDataFromExcel();
                         for (int i = 0; i < list.Length; i++)
                         {
-                            await HelpCommandDeleteAsync(p, list[i].Id);
+                            await HelpCommandDeleteAsync(p, list[i].Id.ToString());
                         }
                         return;
                     }
-                    await HelpCommandDeleteAsync(p, NumBeDelete);
+                    await HelpCommandDeleteAsync(p, IdDelete);
                 });
             }
         }
 
-        private async Task HelpCommandDeleteAsync(Grid grid, int id)
+        private async Task HelpCommandDeleteAsync(Grid grid, string id)
         {
-            if ((id == null) || (grid as Grid).Children.OfType<Button>().Where(pa => pa.Name.Equals($"Btn{id.ToString()}")).ToList().Count == 0)
+            if ((id.Trim().Length==0) || (grid as Grid).Children.OfType<Button>().Where(pa => pa.Name.Equals($"Btn{id.ToString()}")).ToList().Count == 0)
             {
                 MessageBox.Show($"We can't delete {id.ToString()}");
                 return;
             }
 
-            await GetUtilities.DeleteNodeInGridAsync(grid, id);
+            await GetUtilities.DeleteNodeInGridAsync(grid,int.Parse( id));
         }
 
-        public ICommand BtnUpdateClickCommand { get
+        public ICommand BtnUpdateClickCommand
+        {
+            get
             {
                 return btnUpdateClickCommand = new RelayCommand<Grid>(async (p) =>
                 {
-                    var studentUpdate = GetUtilities.Tree.FindNode(new Student(int.Parse(IdUpdate))).Data;
-                    if (studentUpdate == null || IsToggleBtnUpdate == true)//State :Find the student
+                    var studentUpdate = GetUtilities.Tree.FindNode(new Student(int.Parse(IdUpdate)))?.Data;
+                    if (studentUpdate == null )
+                    {
+                        MessageBox.Show("We don't have this student!");
+                        IsToggleBtnUpdate = false;
+                        return;
+                    }
+                    if (IsToggleBtnUpdate == true)//State :Find the student
                     {
                         var button =GetUtilities.FindButtonInGrid(p, IdUpdate);
                         studentUpdate.Name = NameUpdate;
@@ -736,7 +770,7 @@ namespace Wpf_AVLStudent.ViewModel
 
         private void ClearDataExpDelete()
         {
-            NumBeDelete = 0;
+            IdDelete = "";
             IsCkbDeleteArray = false;
         }
 

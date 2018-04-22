@@ -263,7 +263,7 @@
                                                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                                          Width="{Binding ElementName=TxbNode,Path=Width}"
                                                          materialDesign:HintAssist.Hint="ID"
-                                                         Text="{Binding NumBeDelete}"/>
+                                                         Text="{Binding IdDelete}"/>
                                             </StackPanel>
                                         </StackPanel>
 
