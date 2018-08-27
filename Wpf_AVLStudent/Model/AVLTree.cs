@@ -56,8 +56,7 @@ namespace Wpf_AVLStudent.Model
         /// <returns><seealso cref="Node{T}"/></returns>
         public object Successor()
         {
-            return Successor(Root);//GetMin(root.Right);//root.Right.GetMin();
-            //throw new NotImplementedException();
+            return Successor(Root);
         }
 
         /// <summary>
@@ -473,22 +472,22 @@ namespace Wpf_AVLStudent.Model
         /// Insert a value to
         /// </summary>
         /// <param name="key"></param>
-        public async Task InsertAsync(T key)
+        public async Task InsertAsync(T item)
         {
-            if (key == null)
+            if (item == null)
             {
                 return;
             }
-            Root = new Node<T>(await InsertAsync(Root,new Node<T>( key)));
+            Root = new Node<T>(await InsertAsync(Root,new Node<T>( item)));
         }
 
-        public async Task InsertAsync(Node<T> node)
+        public async Task InsertAsync(Node<T> item)
         {
-            if (node == null)
+            if (item == null)
             {
                 return;
             }
-            Root =await InsertAsync(Root, node);
+            Root =await InsertAsync(Root, item);
         }
 
         private async Task<Node<T>> InsertAsync(Node<T> x,Node< T> key)

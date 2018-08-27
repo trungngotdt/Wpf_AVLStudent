@@ -74,7 +74,7 @@ namespace Wpf_AVLStudent.ViewModel
         private bool isCkbAddArray = false;
         private bool isCkbDeleteArray = false;
         private readonly int VerticalMarging = 100;
-        private readonly int HorizontalMarging = 50;
+        //private readonly int HorizontalMarging = 50;
         private double heightGridBST;
         private double widthGridBST;
 
@@ -503,17 +503,7 @@ namespace Wpf_AVLStudent.ViewModel
                                  builder.Append(list[i].ToString() + "\n");
                                  continue;
                              }
-                             /*
-                             if ((p as Grid).Children.OfType<Button>().Where(pa => pa.Name.Equals($"Btn{list[i].Id.ToString()}")).ToList().Count != 0)
-                             {
-                                 builder.Append(list[i].ToString() + "\n");
-                                 continue;
-                             }
-                             
-                             Debug.WriteLine(list[i]. Id.ToString());
-                             student = new Student(list[i].Id, list[i].Name, list[i].BirthDay, list[i].AvgMark, list[i].AccumulationCredit);
-                             await GetUtilities.AddButtonGridAsync(p as Grid, student);
-                             */
+                            
                              await Task.Delay(1000);
                          }
                          if (builder.Length != 0)
@@ -523,22 +513,7 @@ namespace Wpf_AVLStudent.ViewModel
                          return;
                      }
                      await HelpCommandAddNodeAsync(p as Grid, Id, Name, BirthDay, AvgMark, AccumulationCredit);
-                     /*
-                     if ((Id.Trim().Length == 0) || (p as Grid).Children.OfType<Button>().Where(pa => pa.Name.Equals($"Btn{Id.ToString()}")).ToList().Count != 0)
-                     {
-                         MessageBox.Show($"We can't add {Id.ToString()}");
-                         return;
-                     }
-                     if (Name==null||Id==null||AvgMark==null||AccumulationCredit==null)
-                     {
-                         MessageBox.Show("We don't have enough data to add node!");
-                         return;
-                     }
-                     student = new Student(int.Parse(Id), Name, BirthDay, float.Parse(AvgMark), int.Parse(AccumulationCredit));
-                     await GetUtilities.AddButtonGridAsync(p as Grid, student);
-                     HeightGridBST = GetUtilities.HeightGridBST;
-                     WidthGridBST = GetUtilities.WidthGridBST;
-                     */
+                    
                  });
             }
         }

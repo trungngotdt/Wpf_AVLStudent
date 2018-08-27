@@ -15,6 +15,7 @@ namespace Wpf_AVLStudent.MyUtilities
 {
     public class Utilities:IUtilities
     {
+        private const int R = 25;
         private ITree<Student> tree;
         private IHelper helper;
 
@@ -137,7 +138,7 @@ namespace Wpf_AVLStudent.MyUtilities
 
         }
 
-        private async Task RelayoutAfterRotateAsync(Node<Student> node, UIElement p, Node<Student> father = null, bool isRight = false)
+        private async Task RelayoutAfterRotateAsync(Node<Student> node, UIElement p, Node<Student> father = null)
         {
             if (node == null)
             {
@@ -174,9 +175,9 @@ namespace Wpf_AVLStudent.MyUtilities
                     list.Add(task);
                 }
                 await Task.WhenAll(list);
-                DrawLine(p as Grid, father.X, node.X, father.Y, node.Y, isRight, $"Btn{father.Data.Id}Btn{node.Data.Id}");
+                DrawLine(p as Grid, father.X, node.X, father.Y, node.Y, $"Btn{father.Data.Id}Btn{node.Data.Id}");
             }
-            AnimationButtonMovetTo(node.X, node.Y, (p as Grid).Children.OfType<Button>().Where(b => b.Name == $"Btn{node.Data.Id}").FirstOrDefault());
+            AnimationButtonMovetTo(node.X, node.Y, (p as Grid).Children.OfType<Button>().FirstOrDefault(b => b.Name == $"Btn{node.Data.Id}"));
             Task taskLeft = Task.Factory.StartNew(() =>
             {
                 Application.Current.Dispatcher.Invoke(async () =>
@@ -188,7 +189,7 @@ namespace Wpf_AVLStudent.MyUtilities
             {
                 Application.Current.Dispatcher.Invoke(async () =>
                 {
-                    await RelayoutAfterRotateAsync(node.Right, p, node, true);
+                    await RelayoutAfterRotateAsync(node.Right, p, node);
                 });
             });
             await Task.WhenAll(new Task[] { taskLeft, taskRight });
@@ -209,19 +210,19 @@ namespace Wpf_AVLStudent.MyUtilities
         /// <param name="y2"></param>
         /// <param name="isRightLeaf"></param>
         /// <param name="name"></param>
-        private void DrawLine(Grid grid, double x1, double x2, double y1, double y2, bool isRightLeaf, string name)
+        private void DrawLine(Grid grid, double x1, double x2, double y1, double y2, string name)
         {
             Line l = new Line
             {
                 Stroke = new SolidColorBrush(Colors.Black),
                 StrokeThickness = 2.0,
                 Name = name,
-                X1 = x1 + (isRightLeaf ? 25 : 25),
-                X2 = x1 + (isRightLeaf ? 25 : 25), //x2 + (isRightLeaf ? 0 : 50),
-                Y1 = y1 + 50, //btn1Point.Y + a.ActualHeight / 2;
-                Y2 = y1 + 50
+                X1 = x1 + R,
+                X2 = x1 + R, //x2 + (isRightLeaf ? 0 : 50),
+                Y1 = y1 + R*2, //btn1Point.Y + a.ActualHeight / 2;
+                Y2 = y1 + R*2
             };
-            AnimationGrowLine(x2 + (isRightLeaf ? 25 : 25), y2 /*+ 25*/, TimeSpan.FromSeconds(1), l);
+            AnimationGrowLine(x2 + R, y2 , TimeSpan.FromSeconds(1), l);
             grid.Children.Add(l);
         }
         
@@ -298,7 +299,7 @@ namespace Wpf_AVLStudent.MyUtilities
                     await ReLayoutAllButtonAsync(p as Grid);
                     MaxHeight++;
                 }
-                DrawLine(p as Grid, checkExitsParent.Item1.X, node.X, checkExitsParent.Item1.Y, node.Y, checkExitsParent.Item2 > 0, $"{"Btn" + checkExitsParent.Item1.Data.Id.ToString() + "Btn" + node.Data.Id.ToString() }");
+                DrawLine(p as Grid, checkExitsParent.Item1.X, node.X, checkExitsParent.Item1.Y, node.Y, $"{"Btn" + checkExitsParent.Item1.Data.Id.ToString() + "Btn" + node.Data.Id.ToString() }");
 
                 Tree.Root = await FindAndRotationAsync(Tree.Root, new Node<Student>(student, x, y), (p as Grid));
             }
@@ -341,9 +342,9 @@ namespace Wpf_AVLStudent.MyUtilities
 
                 button.SetValue(Grid.HorizontalAlignmentProperty, HorizontalAlignment.Left);
                 button.SetValue(Grid.VerticalAlignmentProperty, VerticalAlignment.Top);
-                button.Margin = thickness;// new Thickness(1138.3 / 2, 20, 0, 0);
-                button.Width = 50;
-                button.Height = 50;
+                button.Margin = thickness;
+                button.Width = R*2;
+                button.Height = R*2;
                 RoundButton(button);
                 grid.Children.Add(button);
                 return true;
@@ -392,13 +393,13 @@ namespace Wpf_AVLStudent.MyUtilities
                         p.BeginAnimation(Line.X2Property, null);//Animation be removed
                         if (int.Parse(number2) > int.Parse(number1))//Right
                         {
-                            p.X1 = p.X1 * 2 - 25;//- 50;
-                            p.X2 = X2 * 2 - 25;
+                            p.X1 = p.X1 * 2 - R;//- 50;
+                            p.X2 = X2 * 2 - R;
                         }
                         else//Left
                         {
-                            p.X2 = X2 * 2 - 25;//- 50;
-                            p.X1 = p.X1 * 2 - 25;
+                            p.X2 = X2 * 2 - R;//- 50;
+                            p.X1 = p.X1 * 2 - R;
                         }
                         p.BeginAnimation(Line.Y2Property, null);//Animation be removed
                         p.Y2 = Y2;
@@ -415,7 +416,7 @@ namespace Wpf_AVLStudent.MyUtilities
         private void ResizeGrid()
         {
             WidthGridBST = WidthGridBST * 2;
-            HeightGridBST = HeightGridBST + 100;
+            HeightGridBST = HeightGridBST + R*4;
         }
 
         #endregion
@@ -447,9 +448,8 @@ namespace Wpf_AVLStudent.MyUtilities
             {
                 return;
             }
-            var button = (grid as Grid).Children.OfType<Button>().ToList()
-                .Where(p => p.Content.Equals(nodeBeFind.Data.Id.ToString()))
-                .FirstOrDefault();
+            var button = (grid as Grid).Children.OfType<Button>().AsEnumerable()
+                .FirstOrDefault(p => p.Content.Equals(nodeBeFind.Data.Id.ToString()));
             if (button == null)
             {
                 return;
@@ -476,8 +476,8 @@ namespace Wpf_AVLStudent.MyUtilities
                         VerticalAlignment = VerticalAlignment.Top,
                         Margin = new Thickness(point.X - 5, point.Y - 5, 0, 0),
                         Stroke = new SolidColorBrush(Colors.Red),
-                        Width = 60,
-                        Height =60,
+                        Width = R*3,
+                        Height =R*3,
                         StrokeThickness = 1.0
                     };
                     (grid as Grid).Children.Add(ellipse);
@@ -509,7 +509,6 @@ namespace Wpf_AVLStudent.MyUtilities
             int NumBeDelete = nodeDelete;            
             var tup = FindButtonInGrid(grid, nodeDelete);
             var student = new Student(nodeDelete);
-            //Task.Factory.ContinueWhenAll(tup.Result.Item1.ToArray(), p => { });
             await tup.ContinueWith(p =>
             {
                 Application.Current.Dispatcher.Invoke(async () =>
@@ -519,7 +518,7 @@ namespace Wpf_AVLStudent.MyUtilities
                     {
                         var successor = Tree.GetMin(nodeDe.Right);
                         var nodeSucc = Tree.FindNode(nodeDe, successor);
-                        var buttonSucc = grid.Children.OfType<Button>().Where(s => s.Content.Equals(nodeSucc.Data.Id.ToString())).FirstOrDefault();
+                        var buttonSucc = grid.Children.OfType<Button>().FirstOrDefault(s => s.Content.Equals(nodeSucc.Data.Id.ToString()));
                         AnimationButtonMovetTo(nodeDe.X, nodeDe.Y, buttonSucc);//to move a successor to new position (the button will be deleted)
                         Node<Student> nodeDelPar = new Node<Student>();
                         Task taskFindParent = Task.Factory.StartNew(() => { nodeDelPar = Tree.FindParent(new Node<Student>(student)).Item1; });
@@ -534,7 +533,6 @@ namespace Wpf_AVLStudent.MyUtilities
                             {
                                 Tree.Root = await RemoveAsync(Tree.Root,new Student( NumBeDelete), grid);
                             });
-                            //Tree.Remove(new Node<int>(NumBeDelete));
                         });
                         grid.Children.OfType<Line>().Where(l => l.Name.Contains($"{"Btn" + nodeDelete.ToString()}")).ToList().ForEach((item) =>
                         {
@@ -563,7 +561,6 @@ namespace Wpf_AVLStudent.MyUtilities
                             }
                         }); grid.Children.Remove(p.Result.Item2);
                     }
-                    //AnimationButtonMovetTo(20, 20, p.Result.Item2);
                 });
             });
         }
@@ -642,7 +639,7 @@ namespace Wpf_AVLStudent.MyUtilities
         /// <returns></returns>
         private Line FindLineInGrid(Grid grid, string name)
         {
-            var line = grid.Children.OfType<Line>().Where(p => p.Name.Equals(name)).FirstOrDefault();
+            var line = grid.Children.OfType<Line>().FirstOrDefault(p => p.Name.Equals(name));
             return line;
         }
 
@@ -673,7 +670,6 @@ namespace Wpf_AVLStudent.MyUtilities
                 listTask.Add(task);
             }
             await Task.WhenAll(listTask);
-            //var result = new Tuple<List<Task>, Button>(listTask, button);
             return new Tuple<List<Task>, Button>(listTask, button);
         }
 
@@ -735,16 +731,16 @@ namespace Wpf_AVLStudent.MyUtilities
                 var line = FindLineInGrid(grid, nameLine);
                 grid.Children.Remove(line);
                 var remainingSpace = grid.ActualWidth / Math.Pow(2, ((nodeParent.Y + VerticalMarging) / VerticalMarging));
-                node.X = nodeParent.X + (isRight == true ? remainingSpace : -remainingSpace);
+                node.X = nodeParent.X + (isRight  ? remainingSpace : -remainingSpace);
                 node.Y = nodeParent.Y + VerticalMarging;
-                DrawLine(grid, nodeParent.X, node.X, nodeParent.Y, node.Y, isRight, nameLine);
+                DrawLine(grid, nodeParent.X, node.X, nodeParent.Y, node.Y, nameLine);
             }
             else
             {
                 node.X = grid.ActualWidth / 2;
                 node.Y = VerticalMarging;
             }
-            var button = grid.Children.OfType<Button>().Where(p => p.Name.Equals("Btn" + node.Data.Id.ToString())).Single();
+            var button = grid.Children.OfType<Button>().Single(p => p.Name.Equals("Btn" + node.Data.Id.ToString()));
             AnimationButtonMovetTo(node.X, node.Y, button);
 
             var taskR = Task.Factory.StartNew(() =>
@@ -777,7 +773,6 @@ namespace Wpf_AVLStudent.MyUtilities
             sb.Children.Add(animation);
             sb.Completed += (o, s) =>
             {
-                var margin = button.Margin;
                 button.BeginAnimation(Button.MarginProperty, null);
                 button.Margin = new Thickness(x, y, 0, 0);
             };
